@@ -14,15 +14,16 @@ window.onload = function() {
 	canvas.style.display="block";
 	ctx = canvas.getContext("2d");
 
-	document.body.addEventListener("touchstart", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
-document.body.addEventListener("touchend", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
-document.body.addEventListener("touchmove", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
+	/*document.body.addEventListener("touchstart", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
+	document.body.addEventListener("touchend", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
+	document.body.addEventListener("touchmove", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
 	function fixTouchMove( event )
 	{
 	    return;
 	}
 	document.body.removeEventListener( "touchstart", fixTouchMove );
-	document.body.addEventListener( "touchstart", fixTouchMove );
+	document.body.addEventListener( "touchstart", fixTouchMove );*/
+	window.addEventListener("touchmove", mouseMoveEvent, false);
 	inter=setInterval(draw, 1000 / xx);
 };
 var gamed_over=false;
