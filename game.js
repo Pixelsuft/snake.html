@@ -41,14 +41,14 @@ function draw() {
 	if (snakeX < 0) {
 		gameOver();
 	}
-	if (snakeX > width/gridSize-1) {
+	if (snakeX > width/gridSize) {
 		gameOver();
 	}
 
 	if (snakeY < 0) {
 		gameOver();
 	}
-	if (snakeY > height/gridSize-1) {
+	if (snakeY > height/gridSize) {
 		gameOver();
 	}
 	if (snakeX == appleX && snakeY == appleY) {
@@ -89,8 +89,6 @@ function draw() {
 	  snakeTrail.shift();
 	}
 }
-
-// input
 function keyDownEvent(e) {
 	switch (e.keyCode) {
 	  case 37:
