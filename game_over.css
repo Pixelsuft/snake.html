@@ -1,0 +1,16 @@
+* {
+	cursor: default;
+	overflow: hidden;
+	-webkit-user-select: none;      
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: Segoe UI;
+	font-size: 20px;
+	background-color: rgb(0, 0, 0);
+	color: rgb(0, 255, 0);
+}
