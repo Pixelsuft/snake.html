@@ -24,6 +24,7 @@ window.onload = function() {
 	document.body.removeEventListener( "touchstart", fixTouchMove );
 	document.body.addEventListener( "touchstart", fixTouchMove );*/
 	window.addEventListener("touchmove", mouseMoveEvent, false);
+	document.addEventListener("touchmove", mouseMoveEvent, false);
 	inter=setInterval(draw, 1000 / xx);
 };
 var gamed_over=false;
@@ -104,7 +105,6 @@ var temp_x;
 var temp_y;
 var sens=4;
 function mouseMoveEvent(e) {
-	e.preventDefault();
 	console.log(e)
 	if(others==false){
 		temp_x=parseInt(e.x);
