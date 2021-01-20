@@ -14,7 +14,7 @@ window.onload = function() {
 	canvas.style.display="block";
 	ctx = canvas.getContext("2d");
 
-	document.addEventListener("mousemove", mouseMoveEvent);
+	document.addEventListener("touchmove", mouseMoveEvent);
 	inter=setInterval(draw, 1000 / xx);
 };
 var gamed_over=false;
