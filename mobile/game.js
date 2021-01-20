@@ -96,6 +96,7 @@ var temp_x;
 var temp_y;
 var sens=4;
 function mouseMoveEvent(e) {
+	e.preventDefault();
 	console.log(e)
 	if(others==false){
 		temp_x=parseInt(e.x);
