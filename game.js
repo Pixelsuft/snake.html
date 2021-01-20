@@ -41,14 +41,14 @@ function draw() {
 	if (snakeX < 0) {
 		gameOver();
 	}
-	if (snakeX > width/gridSize) {
+	if (snakeX > (width/gridSize)+1) {
 		gameOver();
 	}
 
 	if (snakeY < 0) {
 		gameOver();
 	}
-	if (snakeY > height/gridSize) {
+	if (snakeY > (height/gridSize)+1) {
 		gameOver();
 	}
 	if (snakeX == appleX && snakeY == appleY) {
