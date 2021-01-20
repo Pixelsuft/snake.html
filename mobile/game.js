@@ -14,8 +14,9 @@ window.onload = function() {
 	canvas.style.display="block";
 	ctx = canvas.getContext("2d");
 
-	document.addEventListener("touchmove", mouseMoveEvent);
-	document.addEventListener("mousemove", mouseMoveEvent);
+	document.body.addEventListener("touchstart", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
+document.body.addEventListener("touchend", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
+document.body.addEventListener("touchmove", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
 	function fixTouchMove( event )
 	{
 	    return;
