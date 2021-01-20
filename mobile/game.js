@@ -16,6 +16,12 @@ window.onload = function() {
 
 	document.addEventListener("touchmove", mouseMoveEvent);
 	document.addEventListener("mousemove", mouseMoveEvent);
+	function fixTouchMove( event )
+	{
+	    return;
+	}
+	document.body.removeEventListener( "touchstart", fixTouchMove );
+	document.body.addEventListener( "touchstart", fixTouchMove );
 	inter=setInterval(draw, 1000 / xx);
 };
 var gamed_over=false;
