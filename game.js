@@ -15,6 +15,7 @@ window.onload = function() {
 	document.addEventListener("keydown", keyDownEvent);
 	inter=setInterval(draw, 1000 / xx);
 };
+var gamed_over=false;
 var gridSize = (tileSize = 20);
 var nextX = 1;
 var nextY = 0;
@@ -27,7 +28,11 @@ var snakeX = (snakeY = 10);
 var appleX = (appleY = 15);
 
 function gameOver(){
-	location.href="game_over.html?score="+score+"&speed="+xx;
+	if(gamed_over==false){
+		gamed_over=true;
+		clearInterval(inter);
+		location.href="game_over.html?score="+score+"&speed="+xx;
+	}
 }
 
 function draw() {
