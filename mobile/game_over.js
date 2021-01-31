@@ -15,11 +15,17 @@ function get_query_arguments()
 	return parameters;
 }
 var args=get_query_arguments();
-document.body.innerHTML="Game Over :(<br>Score: "+args["score"]+".<br>Speed: "+args["speed"]+".<br><br><div id=\"again\">Play Again</div><div id=\"ex\">Exit</div>";
-document.getElementById('again').addEventListener('click', function(e){
-	location.href="game.html";	
+function game_loc(){
+	location.href="game.html?grid_size="+args['grid_size']+"&speed="+args['orig_speed']+"&max_speed="+args['max_speed'];
+}
+document.body.innerHTML="Game Over :(<br>Score: "+args["score"]+".<br>Speed: "+args["speed"]+".<br><br>R - Play Again<br>SPACE - Exit";
+document.addEventListener('keydown', function(e){
+	if(e.key==" " || e.code=="Space"){
+		location.href="/snake.html/mobile";
+	}
+	else if(e.keyCode==82 || e.code=="KeyR"){
+		game_loc();	
+	}
 });
-document.getElementById('ex').addEventListener('click', function(e){
-	location.href="index.html";
-});
+document.addEventListener('click', game_loc);
 document.body.style.display="block";

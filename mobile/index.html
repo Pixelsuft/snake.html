@@ -2,17 +2,21 @@
 <head>
 <title>Pixelsuft Snake</title>
 <link rel="stylesheet" type="text/css" href="index.css">
-<link rel="shortcut icon" type="image/ico" href="favicon.ico">
+<link rel="shortcut icon" type="image/ico" href="/snake.html/favicon.ico">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body id="root" style="display: none;">
 <div id="waiting">
 Controls:<br>
-ARROWS - Control Snake
+TAPS - Control Snake<br>
+<input type="number" id="grid" value="15" placeholder="Grid Size"><br>
+<input type="number" id="speed" value="10" placeholder="Speed"><br>
+<input type="number" id="max_speed" value="40" placeholder="Max Speed">
+<div id="loh">КОЛЯ ЛОХ!</div>
 <br>
 <br>
-Tap To Continue...
+<div id="tapper">Tap To Continue...</div>
 </div>
 <canvas id="canv" style="display: none;"></canvas>
 <script language="JavaScript" type="text/javascript" src="index.js"></script>

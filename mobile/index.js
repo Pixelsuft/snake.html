@@ -11,7 +11,9 @@ var canvas=document.getElementById('canv');
 var ctx=canvas.getContext('2d');
 var inter;
 var toggleColor=false;
-
+document.getElementById('loh').addEventListener('click', function(){
+	alert('Коля лох!!!');
+});
 function drawMenu(){
 	ctx.font="20px Segoe UI";
 	ctx.fillStyle="#00ff00";
@@ -24,36 +26,42 @@ function drawMenu(){
 	ctx.fillText('000000000111011111100111011111110111011111110111000000000',(width/2)-(583/2),140);
 	if(toggleColor==false){
 		ctx.fillStyle="#000000";
-		ctx.fillRect((width/2)-(181/2)-30,((height+160)/2)-30,290,50);
+		ctx.fillRect((width/2)-(112/2)-30,((height+160)/2)-30,231,50);
 		ctx.fillStyle="#00ff00";
-		ctx.fillText('Click To Screen To Start...',(width/2)-(181/2),((height+160)/2));
+		ctx.fillText('Tap To Start...',(width/2)-(112/2),((height+160)/2));
 		toggleColor=true;
 	}
 	else{
 		ctx.fillStyle="#00ff00";
-		ctx.fillRect((width/2)-(181/2),((height+160)/2)-20,215,30);
+		ctx.fillRect((width/2)-(112/2),((height+160)/2)-20,113,30);
 		ctx.fillStyle="#000000";
-		ctx.fillText('Click To Screen To Start...',(width/2)-(181/2),((height+160)/2));
+		ctx.fillText('Tap To Start...',(width/2)-(112/2),((height+160)/2));
 		toggleColor=false;
 	}
 }
-
-document.addEventListener('click', function(){
+function kdf(e){
+	if(inMenu==true){
+		menuAudio.muted=true;
+		clearInterval(inter);
+		location.href="game.html?grid_size="+document.getElementById('grid').value+"&speed="+document.getElementById('speed').value+"&max_speed="+document.getElementById('max_speed').value;
+	}
+}
+function cf(e){
 	if(inMenu==false){
+		inMenu=true;
 		menuAudio.play();
-		waiting.remove();
+		waiting.style.display="none";
 		canvas.width=width;
 		canvas.style.width=width+"px";
 		canvas.height=height;
 		canvas.style.height=height+"px";
 		canvas.style.display="block";
+		drawMenu();
 		inter=setInterval(drawMenu, 1000);
-		inMenu=true;
+		setTimeout(function(){
+			document.addEventListener('click', kdf);
+		}, 2000);
 	}
-	else{
-		menuAudio.muted=true;
-		clearInterval(inter);
-		location.href="game.html";
-	}
-});
+}
+document.getElementById('tapper').addEventListener('click', cf);
 document.body.style.display="block";

@@ -1,55 +1,84 @@
 var canvas, ctx;
-var width=window.innerWidth;
-var height=window.innerHeight;
-var half_width=width/2;
-var half_height=height/2;
+var width=0;
+var height=0;
+var half_width=0;
+var half_height=0;
 var xx = 5;
+var max_xx = 40;
 var inter;
-window.onload = function() {
-	canvas = document.getElementById("canvas");
+function reloadSize(){
+	width=window.innerWidth;
+	height=window.innerHeight;
+	half_width=parseInt(width/2);
+	half_height=parseInt(height/2);
 	canvas.width=width;
 	canvas.style.width=width+"px";
 	canvas.height=height;
 	canvas.style.height=height+"px";
-	canvas.style.display="block";
-	ctx = canvas.getContext("2d");
-
-	/*document.body.addEventListener("touchstart", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
-	document.body.addEventListener("touchend", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
-	document.body.addEventListener("touchmove", function(e){ if (e.target.nodeName == 'CANVAS') { e.preventDefault(); } }, false);
-	function fixTouchMove( event )
-	{
-	    return;
+	canvas.style.display="block";	
+}
+window.onload = function() {
+	canvas = document.getElementById("canvas");
+	if(args["speed"]!==undefined){
+		xx =  parseInt(args["speed"]);
 	}
-	document.body.removeEventListener( "touchstart", fixTouchMove );
-	document.body.addEventListener( "touchstart", fixTouchMove );*/
-	window.addEventListener("touchmove", mouseMoveEvent, false);
-	document.addEventListener("touchmove", mouseMoveEvent, false);
+	if(args["max_speed"]!==undefined){
+		max_xx = parseInt(args["max_speed"]);
+	}
+
+	reloadSize();
+	ctx = canvas.getContext("2d");
+	window.addEventListener("resize", reloadSize);
+	document.addEventListener('contextmenu', function(e){
+		e.preventDefault();
+	});
+	document.addEventListener("click", clickEvent);
 	inter=setInterval(draw, 1000 / xx);
 };
+function get_query_arguments()
+{
+	var query = location.search.substr(1).split("&");
+	var parameters = {};
+
+	for(var i = 0; i < query.length; i++)
+	{
+		var param = query[i].split("=");
+		parameters[param[0]] = decodeURIComponent(param[1]);
+	}
+
+	return parameters;
+}
+var args = get_query_arguments();
 var gamed_over=false;
 var gridSize = (tileSize = 20);
+if(args["grid_size"]!==undefined){
+	gridSize = (tileSize = parseInt(args["grid_size"]));
+}
 var nextX = 1;
 var nextY = 0;
+var next1X = 1;
+var next1Y = 0;
 var score=0;
 var defaultTailSize = 3;
 var tailSize = defaultTailSize;
 var snakeTrail = [];
 var snakeX = (snakeY = 10);
-var others=true;
+
 var appleX = (appleY = 15);
 
 function gameOver(){
 	if(gamed_over==false){
 		gamed_over=true;
 		clearInterval(inter);
-		location.href="game_over.html?score="+score+"&speed="+xx;
+		location.href="game_over.html?score="+score+"&speed="+xx+"&grid_size="+args['grid_size']+"&orig_speed="+args['speed']+"&max_speed="+args['max_speed'];
 	}
 }
 
 function draw() {
-	snakeX += nextX;
-	snakeY += nextY;
+	snakeX += next1X;
+	snakeY += next1Y;
+	nextX = next1X;
+	nextY = next1Y;
 	if (snakeX < 0) {
 		gameOver();
 	}
@@ -63,21 +92,10 @@ function draw() {
 	if (snakeY > (height/gridSize)+1) {
 		gameOver();
 	}
-	if (snakeX == appleX && snakeY == appleY) {
-	  tailSize++;
-
-	  appleX = Math.floor(Math.random() * width/gridSize);
-	  appleY = Math.floor(Math.random() * height/gridSize);
-	  score+=1;
-	  if(Math.floor(Math.random()*10)>5 && xx<20)
-	  {
-		  xx+=1;
-		  clearInterval(inter);
-		  inter=setInterval(draw, 1000 / xx);
-	  }
-	}
 	ctx.fillStyle = "black";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = "red";
+	ctx.fillRect(appleX * tileSize, appleY * tileSize, tileSize, tileSize);
 	for (var i = 0; i < snakeTrail.length; i++) {
 	if(i==snakeTrail.length-1)ctx.fillStyle = "#ff0000";
 	else ctx.fillStyle = "#00ff00";
@@ -88,86 +106,61 @@ function draw() {
 		tileSize
 	  );
 	  if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY) {
-		//gameOver();
+		gameOver();
 	  }
 	}
 	ctx.fillStyle="rgb(0,128,255)";
 	ctx.font="20px Segoe Script";
-	ctx.fillText("Score: "+score/*+" "+nextX+" "+nextY*/, 5, 18);
-	ctx.fillStyle = "red";
-	ctx.fillRect(appleX * tileSize, appleY * tileSize, tileSize, tileSize);
+	ctx.fillText("Score: "+score, 5, 18);
 	snakeTrail.push({ x: snakeX, y: snakeY });
 	while (snakeTrail.length > tailSize) {
 	  snakeTrail.shift();
 	}
+	if (snakeX == appleX && snakeY == appleY) {
+	  tailSize++;
+
+	  appleX = Math.floor(Math.random() * width/gridSize);
+	  appleY = Math.floor(Math.random() * height/gridSize);
+	  score+=1;
+	  if(Math.floor(Math.random()*10)>3 && xx<max_xx)
+	  {
+		  xx+=1;
+		  clearInterval(inter);
+		  inter=setInterval(draw, 1000 / xx);
+	  }
+	}
 }
-var temp_x;
-var temp_y;
-var sens=4;
-function mouseMoveEvent(e) {
-	console.log(e)
-	if(others==false){
-		temp_x=parseInt(e.x);
-		temp_y=parseInt(e.y);
-		if(temp_x<half_width){
-			if(temp_y<half_height){
-				if(nextX!==1){
-					nextX = -1;
-					nextY = 0;
-				}
-			}
-			else{
-				if(nextY!==1){
-					nextX = 0;
-					nextY = -1;
-				}
+function clickEvent(e) {
+	var x=e.x;
+	var y=e.y;
+	if(x<half_width){
+		if(x<half_width/2){
+			if(nextX!==1){
+				next1X = -1;
+				next1Y = 0;
 			}
 		}
 		else{
-			if(temp_y<half_height){
-				if(nextX!==-1){
-					nextX = 1;
-					nextY = 0;
-				}
+			if(nextX!==-1){
+				next1X = 1;
+				next1Y = 0;
 			}
-			else{
-				if(nextY!==-1){
-					nextX = 0;
-					nextY = 1;
-				}
-			}		
 		}
 	}
 	else{
-		temp_x=parseInt(e.movementX);
-		temp_y=parseInt(e.movementY);
-		if(temp_x<-sens){
-			if(temp_y>temp_x){
-				if(nextX!==1){
-					nextX = -1;
-					nextY = 0;
-				}
-			}
-			else if(temp_y<temp_x){
-				if(nextY!==1){
-					nextX = 0;
-					nextY = -1;
-				}
+		if(y<half_height){
+			if(nextY!==1){
+				next1X = 0;
+				next1Y = -1;
 			}
 		}
-		else if(temp_x>sens){
-			if(temp_y<temp_x){
-				if(nextX!==-1){
-					nextX = 1;
-					nextY = 0;
-				}
+		else{
+			if(nextY!==-1){
+				next1X = 0;
+				next1Y = 1;
 			}
-			else if(temp_y>temp_x){
-				if(nextY!==-1){
-					nextX = 0;
-					nextY = 1;
-				}
-			}		
-		}		
+		}
 	}
+	
+	console.log(e);
 }
