@@ -5,13 +5,15 @@ document.addEventListener('contextmenu', function(e){
 var width=window.innerWidth;
 var height=window.innerHeight;
 var inMenu=false;
-var menuAudio = new Audio('https://github.com/Pixelsuft/Console-Snake/raw/main/music/menu.wav');
+var menuAudio = new Audio('menu.wav');
 var waiting=document.getElementById('waiting');
 var canvas=document.getElementById('canv');
 var ctx=canvas.getContext('2d');
 var inter;
 var toggleColor=false;
-
+document.getElementById('loh').addEventListener('click', function(){
+	alert('Коля лох!!!');
+});
 function drawMenu(){
 	ctx.font="20px Segoe UI";
 	ctx.fillStyle="#00ff00";
@@ -37,26 +39,30 @@ function drawMenu(){
 		toggleColor=false;
 	}
 }
-
-document.addEventListener('keydown', function(e){
+function kdf(e){
+	if(inMenu==true){
+		if(e.key==" " || e.code=="Space")
+		{
+			menuAudio.muted=true;
+			clearInterval(inter);
+			location.href="game.html?grid_size="+document.getElementById('grid').value+"&speed="+document.getElementById('speed').value+"&max_speed="+document.getElementById('max_speed').value;
+		}
+	}
+}
+function cf(e){
 	if(inMenu==false){
 		menuAudio.play();
-		waiting.remove();
+		waiting.style.display="none";
 		canvas.width=width;
 		canvas.style.width=width+"px";
 		canvas.height=height;
 		canvas.style.height=height+"px";
 		canvas.style.display="block";
+		drawMenu();
 		inter=setInterval(drawMenu, 1000);
 		inMenu=true;
 	}
-	else{
-		if(e.key==" " || e.code=="Space")
-		{
-			menuAudio.muted=true;
-			clearInterval(inter);
-			location.href="game.html";
-		}
-	}
-});
+}
+document.addEventListener('keydown', kdf);
+document.getElementById('tapper').addEventListener('click', cf);
 document.body.style.display="block";

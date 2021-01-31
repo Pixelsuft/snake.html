@@ -14,3 +14,15 @@ body {
 	background-color: rgb(0, 0, 0);
 	color: rgb(0, 255, 0);
 }
+#loh {
+	color: rgba(0, 255, 0, 0.04);
+}
+input[type="number"] {
+	background-color: rgb(0, 0, 0);
+	color: rgb(0, 255, 0);
+	border: 1px solid rgb(0, 255, 0);
+	border-radius: 15px;
+	font-family: Segoe UI;
+	font-size: 20px;
+	padding-top: 10px;
+}
