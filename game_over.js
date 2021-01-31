@@ -21,7 +21,7 @@ function game_loc(){
 document.body.innerHTML="Game Over :(<br>Score: "+args["score"]+".<br>Speed: "+args["speed"]+".<br><br>R - Play Again<br>SPACE - Exit";
 document.addEventListener('keydown', function(e){
 	if(e.key==" " || e.code=="Space"){
-		location.href="/";
+		location.href="/snake.html";
 	}
 	else if(e.keyCode==82 || e.code=="KeyR"){
 		game_loc();	
