@@ -4,6 +4,7 @@ var height=0;
 var xx = 5;
 var max_xx = 40;
 var inter;
+var god = false;
 function reloadSize(){
 	width=window.innerWidth;
 	height=window.innerHeight;
@@ -50,6 +51,9 @@ var gridSize = (tileSize = 20);
 if(args["grid_size"]!==undefined){
 	gridSize = (tileSize = parseInt(args["grid_size"]));
 }
+if(args["god"]=="true"){
+	god = true;
+}
 var nextX = 1;
 var nextY = 0;
 var next1X = 1;
@@ -75,17 +79,17 @@ function draw() {
 	snakeY += next1Y;
 	nextX = next1X;
 	nextY = next1Y;
-	if (snakeX < 0) {
+	if (snakeX < 0 && god == false) {
 		gameOver();
 	}
-	if (snakeX > (width/gridSize)+1) {
+	if (snakeX > (width/gridSize)+1 && god == false) {
 		gameOver();
 	}
 
-	if (snakeY < 0) {
+	if (snakeY < 0 && god == false) {
 		gameOver();
 	}
-	if (snakeY > (height/gridSize)+1) {
+	if (snakeY > (height/gridSize)+1 && god == false) {
 		gameOver();
 	}
 	ctx.fillStyle = "black";
@@ -101,7 +105,7 @@ function draw() {
 		tileSize,
 		tileSize
 	  );
-	  if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY) {
+	  if (snakeTrail[i].x == snakeX && snakeTrail[i].y == snakeY && god == false) {
 		gameOver();
 	  }
 	}
