@@ -60,6 +60,9 @@ var next1X = 1;
 var next1Y = 0;
 var score=0;
 var defaultTailSize = 3;
+if(args["tail_size"]!==undefined){
+	defaultTailSize = (tileSize = parseInt(args["tail_size"]));
+}
 var tailSize = defaultTailSize;
 var snakeTrail = [];
 var snakeX = (snakeY = 10);
