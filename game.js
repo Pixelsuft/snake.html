@@ -61,7 +61,7 @@ var next1Y = 0;
 var score=0;
 var defaultTailSize = 3;
 if(args["tail_size"]!==undefined){
-	defaultTailSize =  = parseInt(args["tail_size"]);
+	defaultTailSize = parseInt(args["tail_size"]);
 }
 score = defaultTailSize - 3;
 var tailSize = defaultTailSize;
